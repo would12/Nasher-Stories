@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Nasher Stories </title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<main class="container">
+
+  <!-- Header -->
+  <header class="page-header">
+    <h1>The Nasher Stories</h1>
+    <p>
+      Welcome to The Nasher Stories, where feature stories, podcasts, articles, and
+      exhibition reviews from outside publications are searchable by date,
+      site and topic.
+    </p>
+  </header>
+
+  <!-- Filters -->
+   
+  <section class="filters">
+    <select id="tagFilter">
+      <option value="all">tags</option>
+      <option value="nyt">The New York Times</option>
+      <option value="guardian">The Guardian</option>
+      <option value="artforum">Artforum</option>
+    </select>
+
+    <select id="yearFilter">
+      <option value="all">years</option>
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+    </select>
+
+    <input id="searchInput" type="text" placeholder="search by keyword">
+  </section>
+
+  <p class="viewing">Viewing filtered results</p>
+
+  <!-- Results -->
+  <section id="results" class="results">
+
+    <article class="news-card"
+      data-tag="nyt"
+      data-year="2025"
+      data-keywords="ai museums technology culture">
+      <div class="text">
+        <h2>A World Reshaped by A.I. Needs Museums More Than Ever</h2>
+        <p class="meta"> News | The New York Times | September 03, 2025</p>
+        <p class="desc">
+          There’s a bumper crop of museums opening from Taiwan to Paris to Harlem.
+        </p>
+        <a href="https://www.nytimes.com/2025/09/02/arts/design/architecture-museums-obama-center.html?unlocked_article_code=1.i08.nUhH.RfL4e3hezLMe&smid=url-share" target="_blank">READ MORE</a>
+      </div>
+      <img src="https://nasher.duke.edu/wp-content/uploads/2025/09/Screenshot_3-9-2025_11053_static01.nyt_.com_-370x250.jpeg" alt="Museum">
+    </article>
+    
+    <article class="news-card"
+      data-tag="guardian"
+      data-year="2025"
+      data-keywords="human actvity on a massive scale">
+      <div class="text">
+        <h2>'Human activity on a massive scale’: a photo exhibition tackles the climate crisis"</h2>
+        <p class="meta">News | The Guardian | February 27, 2025</p>
+        <p class="desc">
+          Photographs from across the globe capture the impact of people on the climate – and of the climate on people.
+        </p>
+        <a href="https://www.theguardian.com/artanddesign/2025/feb/26/second-nature-exhibition-anthropocene-photography" target="_blank">READ MORE</a>
+      </div>
+      <img src="https://nasher.duke.edu/wp-content/uploads/2024/01/web-nasher-Anthropocene-Edward-Burtynsky-370x250.jpg" alt="Museum">
+    </article>
+    
+     <article class="news-card"
+      data-year="2024"
+      data-keywords="your campus museums">
+      <div class="text">
+        <h2>Be a part of YOUR campus museum</h2>
+        <p class="meta"> Article | August 08, 2024</p>
+        <p class="desc">
+          Student Gallery Guides Lead interactive tours for various audiences, including, but not limited to, the general public, university classes, K-12 students a...
+        </p>
+        <a href="https://nasher.duke.edu/stories/your-campus-museum/" target="_blank">READ MORE</a>
+     </div>
+      <img src="https://nasher.duke.edu/wp-content/uploads/2023/08/nasher-caldwell-spirit-in-the-land-duke-student-party-022-370x250.jpg" alt="Museum">
+    </article>
+
+  </section>
+
+  <p id="noResults" class="no-results">No results found</p>
+
+</main>
+
+<script>
+  const tagFilter = document.getElementById("tagFilter");
+  const yearFilter = document.getElementById("yearFilter");
+  const searchInput = document.getElementById("searchInput");
+  const articles = document.querySelectorAll(".news-card");
+  const noResults = document.getElementById("noResults");
+
+  function filterArticles() {
+    let visibleCount = 0;
+    const tag = tagFilter.value;
+    const year = yearFilter.value;
+    const keyword = searchInput.value.toLowerCase();
+    
+
+    articles.forEach(article => {
+      const matchesTag =
+        tag === "all" || article.dataset.tag === tag;
+
+      const matchesYear =
+        year === "all" || article.dataset.year === year;
+
+      const text =
+        article.textContent.toLowerCase() +
+        article.dataset.keywords;
+
+      const matchesKeyword =
+        keyword === "" || text.includes(keyword);
+
+      if (matchesTag && matchesYear && matchesKeyword) {
+        article.style.display = "flex";
+        visibleCount++;
+      } else {
+        article.style.display = "none";
+      }
+    });
+
+    noResults.style.display = visibleCount === 0 ? "block" : "none";
+  }
+
+  tagFilter.addEventListener("change", filterArticles);
+  yearFilter.addEventListener("change", filterArticles);
+  searchInput.addEventListener("input", filterArticles);
+</script>
+
+</body>
+</html>
+
